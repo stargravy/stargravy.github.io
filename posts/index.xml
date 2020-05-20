@@ -14,13 +14,13 @@
 			<pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
 			
 			<guid>https://stargravy.ca/posts/failing-revenge/</guid>
-			<description>Intro A fun web challenge from the NorthSec 2020 CTF.
-In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
+			<description>A fun web challenge from the NorthSec 2020 CTF.
+Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
 The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.
   el_1337&amp;rsquo;s forum post
   The challenge contains two flags to find.</description>
-			<content type="html"><![CDATA[<h2 id="intro">Intro</h2>
-<p>A fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</p>
+			<content type="html"><![CDATA[<p><em>A fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</em></p>
+<h2 id="intro">Intro</h2>
 <p>In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.</p>
 <p>The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A+ to an F on the school&rsquo;s grade server.</p>
 <figure>
@@ -183,11 +183,11 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 			<pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
 			
 			<guid>https://stargravy.ca/posts/last-minute-homework/</guid>
-			<description>Intro Another fun web challenge from the NorthSec 2020 CTF.
-A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
+			<description>Another fun web challenge from the NorthSec 2020 CTF.
+Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
 Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.</description>
-			<content type="html"><![CDATA[<h2 id="intro">Intro</h2>
-<p>Another fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</p>
+			<content type="html"><![CDATA[<p><em>Another fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</em></p>
+<h2 id="intro">Intro</h2>
 <p>A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at <code>homeworks.ctf</code>.</p>
 <p>Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at <code>homeworks-malware.ctf</code>) which we could leverage in our homework heist.</p>
 <h2 id="the-application">The Application</h2>

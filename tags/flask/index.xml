@@ -17,10 +17,11 @@
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://stargravy.ca/posts/failing-revenge/</guid>
-      <description>Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
+      <description>Intro A fun web challenge from the NorthSec 2020 CTF.
+In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
 The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.
   el_1337&amp;rsquo;s forum post
-  The challenge contains two flags to find. We are given the source code, and a link to the application&amp;rsquo;s front-end at grades.</description>
+  The challenge contains two flags to find.</description>
     </item>
     
   </channel>

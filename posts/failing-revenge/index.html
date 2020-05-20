@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Failing Revenge - nsec 2020 CTF">
+<meta itemprop="description" content="Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
+The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A&#43; to an F on the school&rsquo;s grade server.
+  el_1337&rsquo;s forum post
+  The challenge contains two flags to find. We are given the source code, and a link to the application&rsquo;s front-end at grades.">
+<meta itemprop="datePublished" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-05-18T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1310">
+
+
+
+<meta itemprop="keywords" content="ctf,flask,nsec," /><meta property="og:title" content="Failing Revenge - nsec 2020 CTF" />
+<meta property="og:description" content="Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
+The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A&#43; to an F on the school&rsquo;s grade server.
+  el_1337&rsquo;s forum post
+  The challenge contains two flags to find. We are given the source code, and a link to the application&rsquo;s front-end at grades." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://stargravy.github.io/posts/failing-revenge/" />
+<meta property="article:published_time" content="2020-05-18T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-18T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Failing Revenge - nsec 2020 CTF"/>
+<meta name="twitter:description" content="Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
+The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A&#43; to an F on the school&rsquo;s grade server.
+  el_1337&rsquo;s forum post
+  The challenge contains two flags to find. We are given the source code, and a link to the application&rsquo;s front-end at grades."/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Failing Revenge - nsec 2020 CTF</title>
+	<link rel="stylesheet" href="http://stargravy.github.io/css/style.min.c61b605bffe0558627f18c60ab7f7cc28c431f15490eec470e47cfabd19011d3.css" integrity="sha256-xhtgW//gVYYn8Yxgq398woxDHxVJDuxHDkfPq9GQEdM=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="http://stargravy.github.io">stargravy</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="https://twitter.com/stargravy" target="_blank" rel="noopener me" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a><a href="https://github.com/stargravy" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>May 18, 2020</span></div>
+				<h1>Failing Revenge - nsec 2020 CTF</h1>
+			</header>
+			<div class="content">
+				<h2 id="intro">Intro<a href="#intro" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.</p>
+<p>The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A+ to an F on the school&rsquo;s grade server.</p>
+<figure>
+    <img src="/failing-revenge-1.png"
+         alt="el_1337&#39;s forum post"/> <figcaption>
+            <p>el_1337&rsquo;s forum post</p>
+        </figcaption>
+</figure>
+
+<p>The challenge contains two flags to find. We are given the source code, and a link to the application&rsquo;s front-end at <code>grades.ctf</code></p>
+<h2 id="the-application">The Application<a href="#the-application" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>The application consists of <code>grades.ctf</code>, a front-end application written in flask, which communicates with <code>gradeservers.ctf</code>, another flask app working as the back-end, via a forwarder.</p>
+<figure>
+    <img src="/failing-revenge-2.png"
+         alt="The grades application"/> <figcaption>
+            <p>The grades application network diagram from the source code</p>
+        </figcaption>
+</figure>
+
+<p>Taking a quick look at <code>grades.ctf</code> in a browser shows that it is a pretty simple application which lists schools, courses, students, and their grades.
+If we look at the routes defined in the front-end&rsquo;s <code>routes.py</code>, we can see that they each make requests to the grades server by calling <code>_api(endpoint)</code>, which is defined as follows:</p>
+<pre><code>def _api(endpoint):
+    &quot;&quot;&quot;
+    Keyword Arguments:
+    API endpoint to reach endpoint -- 
+    &quot;&quot;&quot;
+    high_school_uri = _get_school_uri()
+    if high_school_uri:
+        from front-end import legacy_http
+        req = legacy_http.request(request.method, f'{high_school_uri}{endpoint}')
+        ans = json.loads(req.output)
+
+        _err_handle(ans)
+        return (ans)
+
+</code></pre><p>Notably, the legacy_http request inherits the request method, and sets the requested url to <code>{high_school_uri}{endpoint}</code>, where <code>high_school_uri</code> is defined as <code>http://{Config.FORWARD_SERVER}/{Config.SCHOOL_GRADESERVERS[school_name]}</code>.</p>
+<p>A quick check of the <code>config.py</code> shows the forward server and gradeserver variables:</p>
+<pre><code>    FORWARD_SERVER = 'gradeservers.ctf:80'
+
+    # http is X001
+    # https is X002
+    SCHOOL_GRADESERVERS = {'Severity High':   '[::1]:5001',
+                           'Stuyvesant High': '[::1]:6001'}
+</code></pre><p>So, making a request for <strong>Wilton Trojan</strong>&lsquo;s grades on the front-end,</p>
+<pre><code>http://grades.ctf/Stuyvesant High/student/1
+</code></pre><p>becomes</p>
+<pre><code>http://gradeservers.ctf:80/[::1]:6001/student/1
+</code></pre><p>We can quickly see how the forwarder is determining which host it forwards to: <code>[::1]:6001</code> corresponds to localhost on port 6001.</p>
+<blockquote>
+<p>This is important to note because this could potentially lead to an <a href="https://portswigger.net/web-security/ssrf">SSRF vulnerability</a>, which could allow us to hijack the forwarder to make requests on our behalf.</p>
+<p>Attempting to access this url directly gives a 403 Forbidden, but we&rsquo;ll come back to this for Flag 2.</p>
+</blockquote>
+<p>Once the request hits <code>gradeservers.ctf</code>, the request is translated into a query for the relevant data from the grades database.</p>
+<p>Finally, looking through the source reveals where our two flags will be displayed if we can reach them:</p>
+<hr>
+<p><strong>The first flag</strong> (defined as <code>FLAG_ONE</code> in <code>gradeservers.ctf</code>'s <code>config.py</code>) will be returned if we can hit the <code>/flag</code> endpoint on the back-end:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FlagApi</span>(Resource):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self):
+        <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#39;status&#39;</span>:<span style="color:#e6db74">&#39;err&#39;</span>,<span style="color:#e6db74">&#39;description&#39;</span>:Config<span style="color:#f92672">.</span>FLAG_ONE})
+</code></pre></div><hr>
+<p><strong>The second flag</strong> (defined as <code>FLAG_TWO</code> in <code>grades.ctf</code>'s <code>config.py</code>) will be returned if we can manage to have <strong>Wilton Trojan</strong>&lsquo;s grade for Computer Science return from <code>gradeservers.ctf</code> as an <strong>F</strong> on the front-end&rsquo;s <code>/course/</code> endpoint, as seen in <code>grades.html</code> in the front-end source:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{<span style="color:#f92672">%</span> <span style="color:#66d9ef">if</span> grade<span style="color:#f92672">.</span>student_name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Wilton Trojan&#39;</span> <span style="color:#f92672">and</span> grade<span style="color:#f92672">.</span>grade_score <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;F&#39;</span> <span style="color:#f92672">and</span> course_name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Computer Science&#39;</span> <span style="color:#f92672">%</span>}
+<span style="color:#f92672">&lt;</span>td class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;grade_score&#34;</span><span style="color:#f92672">&gt;</span>{{config<span style="color:#f92672">.</span>FLAG_TWO}}<span style="color:#f92672">&lt;/</span>td<span style="color:#f92672">&gt;</span>
+{<span style="color:#f92672">%</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">%</span>}
+<span style="color:#f92672">&lt;</span>td class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;grade_score&#34;</span><span style="color:#f92672">&gt;</span>{{ grade<span style="color:#f92672">.</span>grade_score }}<span style="color:#f92672">&lt;/</span>td<span style="color:#f92672">&gt;</span>
+{<span style="color:#f92672">%</span> endif <span style="color:#f92672">%</span>}
+</code></pre></div><hr>
+<blockquote>
+<p>It is also worth noting that the only inputs we can control as an attacker hitting the front-end are the <strong>school name</strong> (which is verified and errors out if it isn&rsquo;t valid) and the <strong>student or course ids</strong> when making requests to <code>/&lt;school_name&gt;/course/&lt;course_id&gt;</code> or <code>&lt;school_name&gt;/student/&lt;student_id&gt;</code>. 
+Luckily, student and course ids are <strong>not</strong> validated before being passed to the forwarder.</p>
+</blockquote>
+<p>We will use all of this information to find the challenge&rsquo;s 2 flags.</p>
+<hr>
+<h2 id="flag-1---capturing-the-flag">Flag 1 - Capturing the /flag<a href="#flag-1---capturing-the-flag" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>As noted above, we know exactly what we need to do to get this flag, which is to trick the forwarder to hit <code>/flag</code> on the back-end instead of <code>/student/id</code> or <code>/course/id</code>.</p>
+<p>We control the <strong>student</strong> or <strong>course</strong> ids, which are not validated before being forwarded as part of a request to the back-end.</p>
+<p>Immediately what comes to mind are the techniques used for <a href="https://portswigger.net/web-security/file-path-traversal">path/directory traversal</a>, because if we can force the forwarder&rsquo;s request to become <code>/student/../flag</code> we win.</p>
+<p>This was initially attempted by passing <code>%2e%2e%2fflag</code>, which failed as the url-encoded characters were still interpreted for the initial request, and resulted in a 404.</p>
+<p>The trick was to double url-encode the <code>%2f</code> character as <code>%252f</code>, which when passed to the forwarder became <code>%2f</code>, which means the request made to the front-end, <code>/student/..%252fflag</code>, hits the back-end as <code>/student/../flag</code>.</p>
+<figure class="med">
+    <img src="/failing-revenge-4.png"
+         alt="capturing the /flag"/> <figcaption>
+            <p>Capturing the /flag via BurpSuite</p>
+        </figcaption>
+</figure>
+
+<hr>
+<h2 id="flag-2---revenge-on-wilton">Flag 2 - Revenge on Wilton<a href="#flag-2---revenge-on-wilton" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>Flag 2 is a little bit more involved, as we need to somehow change Wilton&rsquo;s grade in computer science. We now know that we can hit any back-end endpoint we want using the technique used to get flag 1.</p>
+<p>Additionally, since we know that the forwarder uses the first segment of the url passed to it to determine what host it sends a request to, we can achieve a fully attacker-controlled SSRF.</p>
+<p>Initially, I thought this was going to be a more involved problem than it was, but I think it is interesting to look at where I went down the wrong path.</p>
+<h3 id="the-wrong-path">The wrong path<a href="#the-wrong-path" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>Looking at the routes defined in <code>gradeservers.ctf</code>'s <code>_init_.py</code> we see one which looks perfect for altering Walton&rsquo;s grade:</p>
+<pre><code>------ __init__.py ------
+    ## HTTPS only
+    # Change student grade for course
+    api.add_resource(GradeApi, '/grade/&lt;student_id&gt;/&lt;course_id&gt;/&lt;grade_score&gt;')
+
+------ grade.py -------
+
+    @https  # this calls a function from utils.py which 
+            # checks whether HTTPS is being used
+
+    def patch(self, student_id, course_id, grade_score):
+        grade = Grade.query.filter(Grade.student_id == student_id,
+                                   Grade.course_id == course_id).first()
+        if grade:
+            grade.grade_score = grade_score
+            db.session.commit()
+            return jsonify({'status':'ok'})
+        return jsonify({'status':'err'})
+</code></pre><p>This endpoint points to the <code>GradeApi()</code> class, which can handle normal <code>GET</code> requests, but also defines a handler for <code>PATCH</code> requests. If we could pass the appropriate parameters (student_id, course_id, and grade) to <code>GradeApi()</code> with a <code>PATCH</code> request, we could change Wilton&rsquo;s grade. 
+Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP.</p>
+<p>As noted in the section <code>config.py</code> of <code>grades.ctf</code> above, the <code>[::1]:6001</code> address points to the HTTP grade server for Stuyvesant High, where as <code>[::1]:6002</code> points to the HTTPS version.</p>
+<p>Unfortunately, the front-end only sends HTTP requests to the forwarder, which only appeared to forward HTTP requests, even if pointing at the HTTPS port.</p>
+<p>This is where I believed the challenge was going to be more involved than it ended up being.</p>
+<p>I believed I was going to have to use the SSRF to send the request to our attacker controlled host at <code>shell.ctf</code>, and use something like <a href="https://mitmproxy.org/">mitmproxy</a> to intercept the forwarder traffic, change it to an HTTPS request and point it to the appropriate endpoint with the proper parameters.</p>
+<p>This wouldn&rsquo;t be impossible, but would definitely be a bit more complicated than the option we went with : we could just pretend to be the grade server and return the appropriate response to the forwarder&rsquo;s request.</p>
+<h3 id="tricking-the-front-end-into-giving-us-flag-2">Tricking the front-end into giving us flag 2<a href="#tricking-the-front-end-into-giving-us-flag-2" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>So all we have to do is point the forwarder&rsquo;s request to an attacker controlled host (in this case, <code>shell.ctf</code> was our attacker controlled machine for the CTF), and have the attacker machine respond with an appropriate JSON body which indicates that Wilton failed his course.</p>
+<p>Remembering the SSRF we mentioned above, we know that when the forwarder receives <code>http://gradeservers.ctf:80/&lt;some ip&gt;:&lt;port&gt;/some_dir</code> it forwards the response to <code>http://&lt;some ip&gt;:&lt;port&gt;/some_dir</code>. So we can force it to look for Wilton&rsquo;s grades on our attacker controlled server.</p>
+<p>To complete this we need to take the following steps:</p>
+<ul>
+<li>Host a quick json file (<code>grades.json</code>) on an http server (python&rsquo;s SimpleHTTPServer in this case) listening on the attacker machine (<code>shell.ctf</code>), with the json file containing the following payload:</li>
+</ul>
+<pre><code># Wilton's id: 15, Computer Science course id: 1
+{ 
+  course_name&quot;:&quot;Computer Science&quot;,
+  &quot;grades&quot;:
+  [{ 
+    &quot;student_name&quot;:&quot;Wilton Trojan&quot;, 
+    &quot;grade_score&quot;:&quot;F&quot;, 
+    &quot;student_id&quot;:15
+    }]
+}
+</code></pre><ul>
+<li>Send the following request to the front-end, which uses the trick from Flag 1 to force the forwarder to make its request to our attacker server:</li>
+</ul>
+<pre><code>http://grades.ctf/Stuyvesant High/course/..%252f..%252fshell.ctf:8080/grades.json
+</code></pre><p>The forwarder will find the falsified grades in <code>grades.json</code>, and return it to the front-end. On noting that Wilton&rsquo;s grade in comupter science is now an <strong>F</strong>, the front-end application gives us the flag:</p>
+<figure class="med">
+    <img src="/failing-revenge-5.png"
+         alt="flag 2"/> <figcaption>
+            <p>Tricking the front-end into giving us the flag.</p>
+        </figcaption>
+</figure>
+
+<hr>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-feather"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>stargravy</p>
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="http://stargravy.github.io/tags/ctf">ctf</a></span><span class="tag"><a href="http://stargravy.github.io/tags/flask">flask</a></span><span class="tag"><a href="http://stargravy.github.io/tags/nsec">nsec</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1310 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-17 21:00 -0300</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#intro">Intro</a></li>
+    <li><a href="#the-application">The Application</a></li>
+    <li><a href="#flag-1---capturing-the-flag">Flag 1 - Capturing the /flag</a></li>
+    <li><a href="#flag-2---revenge-on-wilton">Flag 2 - Revenge on Wilton</a>
+      <ul>
+        <li><a href="#the-wrong-path">The wrong path</a></li>
+        <li><a href="#tricking-the-front-end-into-giving-us-flag-2">Tricking the front-end into giving us flag 2</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p><a href="http://stargravy.github.io">stargravy</a></p>
+	</footer>
+
+
+
+	<script src="http://stargravy.github.io/js/bundle.min.ccd461e3ff23465f3abc289e72196bdee89623be9c0d2e3c164082c81fc0500d.js" integrity="sha256-zNRh4/8jRl86vCiechlr3uiWI76cDS48FkCCyB/AUA0=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

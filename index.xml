@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>stargravy</title>
-    <link>http://stargravy.github.io/</link>
+    <link>https://stargravy.ca/</link>
     <description>Recent content on stargravy</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 18 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://stargravy.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://stargravy.ca/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Failing Revenge - nsec 2020 CTF</title>
-      <link>http://stargravy.github.io/posts/failing-revenge/</link>
+      <link>https://stargravy.ca/posts/failing-revenge/</link>
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>http://stargravy.github.io/posts/failing-revenge/</guid>
+      <guid>https://stargravy.ca/posts/failing-revenge/</guid>
       <description>Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
 The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.
   el_1337&amp;rsquo;s forum post

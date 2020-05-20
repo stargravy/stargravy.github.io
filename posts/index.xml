@@ -160,7 +160,7 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 <li>Send the following request to the front-end, which uses the trick from Flag 1 to force the forwarder to make its request to our attacker server:</li>
 </ul>
 <pre><code>http://grades.ctf/Stuyvesant High/course/..%252f..%252fshell.ctf:8080/grades.json
-</code></pre><p>The forwarded request will find the falsified grades in <code>grades.json</code>, and return them to the front-end. On noting that Wilton&rsquo;s grade in computer science is now an <strong>F</strong>, the front-end application gives us the flag:</p>
+</code></pre><p>The forwarded request will find the falsified grades in <code>grades.json</code>, and return them to the front-end. When checking the response and seeing that Wilton&rsquo;s grade in computer science is now an <strong>F</strong>, the front-end application gives us the flag:</p>
 <figure class="med">
     <img src="/failing-revenge-5.png"
          alt="flag 2"/> <figcaption>

@@ -15,7 +15,7 @@ The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from 
   The challenge contains two flags to find.">
 <meta itemprop="datePublished" content="2020-05-18T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1344">
+<meta itemprop="wordCount" content="1348">
 
 
 
@@ -221,7 +221,7 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 <li>Send the following request to the front-end, which uses the trick from Flag 1 to force the forwarder to make its request to our attacker server:</li>
 </ul>
 <pre><code>http://grades.ctf/Stuyvesant High/course/..%252f..%252fshell.ctf:8080/grades.json
-</code></pre><p>The forwarded request will find the falsified grades in <code>grades.json</code>, and return them to the front-end. On noting that Wilton&rsquo;s grade in computer science is now an <strong>F</strong>, the front-end application gives us the flag:</p>
+</code></pre><p>The forwarded request will find the falsified grades in <code>grades.json</code>, and return them to the front-end. When checking the response and seeing that Wilton&rsquo;s grade in computer science is now an <strong>F</strong>, the front-end application gives us the flag:</p>
 <figure class="med">
     <img src="/failing-revenge-5.png"
          alt="flag 2"/> <figcaption>
@@ -243,7 +243,7 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://stargravy.ca/tags/ctf">ctf</a></span><span class="tag"><a href="https://stargravy.ca/tags/flask">flask</a></span><span class="tag"><a href="https://stargravy.ca/tags/nsec">nsec</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1344 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1348 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-17 21:00 -0300</p>
 			</footer>
 		</article>

@@ -109,8 +109,8 @@ Luckily, student and course ids are <strong>not</strong> validated before being 
 <h2 id="flag-2---revenge-on-wilton">Flag 2 - Revenge on Wilton</h2>
 <p>Flag 2 is a little bit more involved, as we need to somehow change Wilton&rsquo;s grade in computer science. We now know that we can hit any back-end endpoint we want using the technique used to get flag 1.</p>
 <p>Additionally, since we know that the forwarder uses the first segment of the url passed to it to determine what host it sends a request to, we can achieve a fully attacker-controlled SSRF.</p>
-<p>Initially, I thought this was going to be a more involved problem than it was, but I think it is interesting to look at where I went down the wrong path.</p>
-<h3 id="the-wrong-path">The wrong path</h3>
+<p>Initially, we thought this was going to be a more involved problem than it was, it is interesting to look at another potential way this could have been solved:</p>
+<h3 id="the-path-not-taken">The path not taken</h3>
 <p>Looking at the routes defined in <code>gradeservers.ctf</code>'s <code>_init_.py</code> we see one which looks perfect for altering Walton&rsquo;s grade:</p>
 <pre><code>------ __init__.py ------
     ## HTTPS only
@@ -134,9 +134,9 @@ Luckily, student and course ids are <strong>not</strong> validated before being 
 Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP.</p>
 <p>As noted in the section <code>config.py</code> of <code>grades.ctf</code> above, the <code>[::1]:6001</code> address points to the HTTP grade server for Stuyvesant High, where as <code>[::1]:6002</code> points to the HTTPS version.</p>
 <p>Unfortunately, the front-end only sends HTTP requests to the forwarder, which only appeared to forward HTTP requests, even if pointing at the HTTPS port.</p>
-<p>This is where I believed the challenge was going to be more involved than it ended up being.</p>
-<p>I believed I was going to have to use the SSRF to send the request to our attacker controlled host at <code>shell.ctf</code>, and use something like <a href="https://mitmproxy.org/">mitmproxy</a> to intercept the forwarder traffic, change it to an HTTPS request and point it to the appropriate endpoint with the proper parameters.</p>
-<p>This wouldn&rsquo;t be impossible, but would definitely be a bit more complicated than the option we went with : we could just pretend to be the grade server and return the appropriate response to the forwarder&rsquo;s request.</p>
+<p>A potential way of exploiting this would be to use the SSRF to send the request to our attacker controlled host at <code>shell.ctf</code>, and use something like <a href="https://mitmproxy.org/">mitmproxy</a> to intercept the forwarder traffic, change it to an HTTPS request and point it to the appropriate endpoint with the proper parameters.</p>
+<p>This would actually update Wilton&rsquo;s grade in the database, which is ideally what we were trying to achieve.</p>
+<p>While this wouldn&rsquo;t be impossible, it was bit more complicated than the option we went with : we could just pretend to be the grade server and return the appropriate response to the forwarder&rsquo;s request.</p>
 <h3 id="tricking-the-front-end-into-giving-us-flag-2">Tricking the front-end into giving us flag 2</h3>
 <p>So all we have to do is point the forwarder&rsquo;s request to an attacker controlled host (in this case, <code>shell.ctf</code> was our attacker controlled machine for the CTF), and have the attacker machine respond with an appropriate JSON body which indicates that Wilton failed his course.</p>
 <p>Remembering the SSRF we mentioned above, we know that when the forwarder receives <code>http://gradeservers.ctf:80/&lt;some ip&gt;:&lt;port&gt;/some_dir</code> it forwards the response to <code>http://&lt;some ip&gt;:&lt;port&gt;/some_dir</code>. So we can force it to look for Wilton&rsquo;s grades on our attacker controlled server.</p>

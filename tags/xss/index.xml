@@ -18,7 +18,7 @@
       
       <guid>https://stargravy.ca/posts/last-minute-homework/</guid>
       <description>Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&amp;rsquo;s machine which we could leverage in our homework heist.
+Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.
 The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:</description>
     </item>
     

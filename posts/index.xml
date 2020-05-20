@@ -170,5 +170,34 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 ]]></content>
 		</item>
 		
+		<item>
+			<title>Last Minute Homework - nsec 2020 CTF</title>
+			<link>https://stargravy.ca/posts/last-minute-homework/</link>
+			<pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+			
+			<guid>https://stargravy.ca/posts/last-minute-homework/</guid>
+			<description>Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
+Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&amp;rsquo;s machine which we could leverage in our homework heist.
+The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:</description>
+			<content type="html"><![CDATA[<h2 id="intro">Intro</h2>
+<p>A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at <code>homeworks.ctf</code>.</p>
+<p>Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&rsquo;s machine which we could leverage in our homework heist.</p>
+<h2 id="the-application">The Application</h2>
+<p>Looking quickly at <code>homeworks.ctf</code> show a fairly limited page consisting of:</p>
+<ul>
+<li>A file upload functionality for uploading our homework.</li>
+<li>An about page which explains that individuals are authenticated to the application by their IP.</li>
+<li>A <code>check</code> page which gives us a personal &ldquo;secret link&rdquo; to our homework submission.</li>
+</ul>
+<figure>
+    <img src="/last-minute-homework-1.png"
+         alt="homework check"/> <figcaption>
+            <p>the homework check page</p>
+        </figcaption>
+</figure>
+
+]]></content>
+		</item>
+		
 	</channel>
 </rss>

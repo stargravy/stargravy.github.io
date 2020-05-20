@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>https://stargravy.ca/posts/last-minute-homework/</loc>
+    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://stargravy.ca/tags/nsec/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
   </url>
@@ -34,6 +39,11 @@
   
   <url>
     <loc>https://stargravy.ca/tags/</loc>
+    <lastmod>2020-05-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://stargravy.ca/tags/xss/</loc>
     <lastmod>2020-05-18T00:00:00+00:00</lastmod>
   </url>
   

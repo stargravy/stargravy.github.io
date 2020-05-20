@@ -23,5 +23,16 @@ The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science f
   The challenge contains two flags to find. We are given the source code, and a link to the application&amp;rsquo;s front-end at grades.</description>
     </item>
     
+    <item>
+      <title>Last Minute Homework - nsec 2020 CTF</title>
+      <link>https://stargravy.ca/posts/last-minute-homework/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://stargravy.ca/posts/last-minute-homework/</guid>
+      <description>Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
+Additionally, the student tells us that they have managed to install a backdoor of sorts on the smart kid&amp;rsquo;s machine which we could leverage in our homework heist.
+The Application Looking quickly at homeworks.ctf show a fairly limited page consisting of:</description>
+    </item>
+    
   </channel>
 </rss>

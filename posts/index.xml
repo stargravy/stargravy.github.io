@@ -14,12 +14,10 @@
 			<pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
 			
 			<guid>https://stargravy.ca/posts/failing-revenge/</guid>
-			<description>A fun web challenge from the NorthSec 2020 CTF.
+			<description>A fun web challenge from the NorthSec 2020 CTF which I tackled with some friends from dc902.
 Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
-The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.
-  el_1337&amp;rsquo;s forum post
-  The challenge contains two flags to find.</description>
-			<content type="html"><![CDATA[<p><em>A fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</em></p>
+The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.</description>
+			<content type="html"><![CDATA[<p><em>A fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF which I tackled with some friends from <a href="https://www.dc902.ca/">dc902</a>.</em></p>
 <h2 id="intro">Intro</h2>
 <p>In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.</p>
 <p>The plan for revenge is to change Wilton&rsquo;s grade in Computer Science from an A+ to an F on the school&rsquo;s grade server.</p>
@@ -111,7 +109,7 @@ Luckily, student and course ids are <strong>not</strong> validated before being 
 <h2 id="flag-2---revenge-on-wilton">Flag 2 - Revenge on Wilton</h2>
 <p>Flag 2 is a little bit more involved, as we need to somehow change Wilton&rsquo;s grade in computer science. We now know that we can hit any back-end endpoint we want using the technique used to get flag 1.</p>
 <p>Additionally, since we know that the forwarder uses the first segment of the url passed to it to determine what host it sends a request to, we can achieve a fully attacker-controlled SSRF.</p>
-<p>Initially, we thought this was going to be a more involved problem than it was, it is interesting to look at another potential way this could have been solved:</p>
+<p>Initially, we thought this was going to be a more involved problem than it it ended up being. Though we didn&rsquo;t fully test the potentially more complicated solution, walking through it led us to the method we ultimately used to solve the challenge, so it is worth taking a look.</p>
 <h3 id="the-path-not-taken">The path not taken</h3>
 <p>Looking at the routes defined in <code>gradeservers.ctf</code>'s <code>_init_.py</code> we see one which looks perfect for altering Walton&rsquo;s grade:</p>
 <pre><code>------ __init__.py ------
@@ -133,18 +131,18 @@ Luckily, student and course ids are <strong>not</strong> validated before being 
             return jsonify({'status':'ok'})
         return jsonify({'status':'err'})
 </code></pre><p>This endpoint points to the <code>GradeApi()</code> class, which can handle normal <code>GET</code> requests, but also defines a handler for <code>PATCH</code> requests. If we could pass the appropriate parameters (student_id, course_id, and grade) to <code>GradeApi()</code> with a <code>PATCH</code> request, we could change Wilton&rsquo;s grade. 
-Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP.</p>
-<p>As noted in the section <code>config.py</code> of <code>grades.ctf</code> above, the <code>[::1]:6001</code> address points to the HTTP grade server for Stuyvesant High, where as <code>[::1]:6002</code> points to the HTTPS version.</p>
-<p>Unfortunately, the front-end only sends HTTP requests to the forwarder, which only appeared to forward HTTP requests, even if pointing at the HTTPS port.</p>
+Unfortunately, making <code>PATCH</code> requests to this endpoint requires that the request use HTTPS instead of HTTP.</p>
+<p>As noted in the section <code>config.py</code> of <code>grades.ctf</code> above, the <code>[::1]:6001</code> address points to the HTTP grade server for Stuyvesant High, where as <code>[::1]:6002</code> points to the HTTPS version.
+The front-end only sends HTTP requests to the forwarder, which only appeared to forward HTTP requests, even if pointing at the HTTPS port, so we need to find another way to manipulate the request.</p>
 <p>A potential way of exploiting this would be to use the SSRF to send the request to our attacker controlled host at <code>shell.ctf</code>, and use something like <a href="https://mitmproxy.org/">mitmproxy</a> to intercept the forwarder traffic, change it to an HTTPS request and point it to the appropriate endpoint with the proper parameters.</p>
 <p>This would actually update Wilton&rsquo;s grade in the database, which is ideally what we were trying to achieve.</p>
 <p>While this wouldn&rsquo;t be impossible, it was bit more complicated than the option we went with : we could just pretend to be the grade server and return the appropriate response to the forwarder&rsquo;s request.</p>
 <h3 id="tricking-the-front-end-into-giving-us-flag-2">Tricking the front-end into giving us flag 2</h3>
-<p>So all we have to do is point the forwarder&rsquo;s request to an attacker controlled host (in this case, <code>shell.ctf</code> was our attacker controlled machine for the CTF), and have the attacker machine respond with an appropriate JSON body which indicates that Wilton failed his course.</p>
-<p>Remembering the SSRF we mentioned above, we know that when the forwarder receives <code>http://gradeservers.ctf:80/&lt;some ip&gt;:&lt;port&gt;/some_dir</code> it forwards the response to <code>http://&lt;some ip&gt;:&lt;port&gt;/some_dir</code>. So we can force it to look for Wilton&rsquo;s grades on our attacker controlled server.</p>
+<p>All we have to do is point the forwarder&rsquo;s request to an attacker controlled host (in this case, <code>shell.ctf</code> was our attacker controlled machine for the CTF), and have the attacker machine respond with an appropriate JSON body which indicates that Wilton failed his course.</p>
+<p>Remembering the SSRF we mentioned above, we know that when the forwarder receives <code>http://gradeservers.ctf:80/&lt;some ip&gt;:&lt;port&gt;/some_dir</code> it forwards the response to <code>http://&lt;some ip&gt;:&lt;port&gt;/some_dir</code>. Knowing this, we can force it to look for Wilton&rsquo;s grades on our attacker controlled server.</p>
 <p>To complete this we need to take the following steps:</p>
 <ul>
-<li>Host a quick json file (<code>grades.json</code>) on an http server (python&rsquo;s SimpleHTTPServer in this case) listening on the attacker machine (<code>shell.ctf</code>), with the json file containing the following payload:</li>
+<li>Host a json file (<code>grades.json</code>) on an http server (python&rsquo;s SimpleHTTPServer in this case) listening on the attacker machine (<code>shell.ctf</code>), with the json file containing the following payload:</li>
 </ul>
 <pre><code># Wilton's id: 15, Computer Science course id: 1
 { 
@@ -183,10 +181,10 @@ Unfortunately, making <code>PATCH</code> requests requires HTTPS instead of HTTP
 			<pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
 			
 			<guid>https://stargravy.ca/posts/last-minute-homework/</guid>
-			<description>Another fun web challenge from the NorthSec 2020 CTF.
+			<description>Another fun web challenge from the NorthSec 2020 CTF which I tackled with some friends from dc902.
 Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.</description>
-			<content type="html"><![CDATA[<p><em>Another fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF.</em></p>
+Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.</description>
+			<content type="html"><![CDATA[<p><em>Another fun web challenge from the <a href="https://nsec.io/">NorthSec 2020</a> CTF which I tackled with some friends from <a href="https://www.dc902.ca/">dc902</a>.</em></p>
 <h2 id="intro">Intro</h2>
 <p>A Severity High student&rsquo;s homework is going to be late if we don&rsquo;t help them steal the smart kid&rsquo;s assignment which has already been submitted to the online homework submission site at <code>homeworks.ctf</code>.</p>
 <p>Additionally, the student tells us that they have managed to install some malware on the smart kid&rsquo;s machine (hosted at <code>homeworks-malware.ctf</code>) which we could leverage in our homework heist.</p>

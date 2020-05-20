@@ -17,11 +17,9 @@
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://stargravy.ca/posts/failing-revenge/</guid>
-      <description>A fun web challenge from the NorthSec 2020 CTF.
+      <description>A fun web challenge from the NorthSec 2020 CTF which I tackled with some friends from dc902.
 Intro In this challenge, Severity High forum member el_133t is challenging us to get revenge on Wilton Trojan, a student from another school who has been spamming the Severity High IRC.
-The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.
-  el_1337&amp;rsquo;s forum post
-  The challenge contains two flags to find.</description>
+The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science from an A+ to an F on the school&amp;rsquo;s grade server.</description>
     </item>
     
     <item>
@@ -30,9 +28,9 @@ The plan for revenge is to change Wilton&amp;rsquo;s grade in Computer Science f
       <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
       
       <guid>https://stargravy.ca/posts/last-minute-homework/</guid>
-      <description>Another fun web challenge from the NorthSec 2020 CTF.
+      <description>Another fun web challenge from the NorthSec 2020 CTF which I tackled with some friends from dc902.
 Intro A Severity High student&amp;rsquo;s homework is going to be late if we don&amp;rsquo;t help them steal the smart kid&amp;rsquo;s assignment which has already been submitted to the online homework submission site at homeworks.ctf.
-Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.ctf) which we could leverage in our homework heist.</description>
+Additionally, the student tells us that they have managed to install some malware on the smart kid&amp;rsquo;s machine (hosted at homeworks-malware.</description>
     </item>
     
   </channel>

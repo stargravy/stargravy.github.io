@@ -75,17 +75,17 @@ If we look at the routes defined in the front-end&rsquo;s <code>routes.py</code>
 <p>Finally, looking through the source reveals where our two flags will be displayed if we can reach them:</p>
 <hr>
 <p><strong>The first flag</strong> (defined as <code>FLAG_ONE</code> in <code>gradeservers.ctf</code>'s <code>config.py</code>) will be returned if we can hit the <code>/flag</code> endpoint on the back-end:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FlagApi</span>(Resource):
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self):
-        <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#39;status&#39;</span>:<span style="color:#e6db74">&#39;err&#39;</span>,<span style="color:#e6db74">&#39;description&#39;</span>:Config<span style="color:#f92672">.</span>FLAG_ONE})
-</code></pre></div><hr>
+<pre><code>class FlagApi(Resource):
+    def get(self):
+        return jsonify({'status':'err','description':Config.FLAG_ONE})
+</code></pre><hr>
 <p><strong>The second flag</strong> (defined as <code>FLAG_TWO</code> in <code>grades.ctf</code>'s <code>config.py</code>) will be returned if we can manage to have <strong>Wilton Trojan</strong>&lsquo;s grade for Computer Science return from <code>gradeservers.ctf</code> as an <strong>F</strong> on the front-end&rsquo;s <code>/course/</code> endpoint, as seen in <code>grades.html</code> in the front-end source:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">{<span style="color:#f92672">%</span> <span style="color:#66d9ef">if</span> grade<span style="color:#f92672">.</span>student_name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Wilton Trojan&#39;</span> <span style="color:#f92672">and</span> grade<span style="color:#f92672">.</span>grade_score <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;F&#39;</span> <span style="color:#f92672">and</span> course_name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Computer Science&#39;</span> <span style="color:#f92672">%</span>}
-<span style="color:#f92672">&lt;</span>td class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;grade_score&#34;</span><span style="color:#f92672">&gt;</span>{{config<span style="color:#f92672">.</span>FLAG_TWO}}<span style="color:#f92672">&lt;/</span>td<span style="color:#f92672">&gt;</span>
-{<span style="color:#f92672">%</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">%</span>}
-<span style="color:#f92672">&lt;</span>td class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;grade_score&#34;</span><span style="color:#f92672">&gt;</span>{{ grade<span style="color:#f92672">.</span>grade_score }}<span style="color:#f92672">&lt;/</span>td<span style="color:#f92672">&gt;</span>
-{<span style="color:#f92672">%</span> endif <span style="color:#f92672">%</span>}
-</code></pre></div><hr>
+<pre><code>{% if grade.student_name == 'Wilton Trojan' and grade.grade_score == 'F' and course_name == 'Computer Science' %}
+&lt;td class=&quot;grade_score&quot;&gt;{{config.FLAG_TWO}}&lt;/td&gt;
+{% else %}
+&lt;td class=&quot;grade_score&quot;&gt;{{ grade.grade_score }}&lt;/td&gt;
+{% endif %}
+</code></pre><hr>
 <blockquote>
 <p>It is also worth noting that the only inputs we can control as an attacker hitting the front-end are the <strong>school name</strong> (which is verified and errors out if it isn&rsquo;t valid) and the <strong>student or course ids</strong> when making requests to <code>/&lt;school_name&gt;/course/&lt;course_id&gt;</code> or <code>&lt;school_name&gt;/student/&lt;student_id&gt;</code>. 
 Luckily, student and course ids are <strong>not</strong> validated before being passed to the forwarder.</p>

@@ -62,7 +62,7 @@ If we look at the routes defined in the front-end&rsquo;s <code>routes.py</code>
     # https is X002
     SCHOOL_GRADESERVERS = {'Severity High':   '[::1]:5001',
                            'Stuyvesant High': '[::1]:6001'}
-</code></pre><p>So, making a request for <strong>Wilton Trojan</strong>&lsquo;s grades on the front-end,</p>
+</code></pre><p>So, making a request for <strong>Wilton Trojan</strong>&rsquo;s grades on the front-end,</p>
 <pre><code>http://grades.ctf/Stuyvesant High/student/1
 </code></pre><p>becomes</p>
 <pre><code>http://gradeservers.ctf:80/[::1]:6001/student/1
@@ -79,7 +79,7 @@ If we look at the routes defined in the front-end&rsquo;s <code>routes.py</code>
     def get(self):
         return jsonify({'status':'err','description':Config.FLAG_ONE})
 </code></pre><hr>
-<p><strong>The second flag</strong> (defined as <code>FLAG_TWO</code> in <code>grades.ctf</code>'s <code>config.py</code>) will be returned if we can manage to have <strong>Wilton Trojan</strong>&lsquo;s grade for Computer Science return from <code>gradeservers.ctf</code> as an <strong>F</strong> on the front-end&rsquo;s <code>/course/</code> endpoint, as seen in <code>grades.html</code> in the front-end source:</p>
+<p><strong>The second flag</strong> (defined as <code>FLAG_TWO</code> in <code>grades.ctf</code>'s <code>config.py</code>) will be returned if we can manage to have <strong>Wilton Trojan</strong>&rsquo;s grade for Computer Science return from <code>gradeservers.ctf</code> as an <strong>F</strong> on the front-end&rsquo;s <code>/course/</code> endpoint, as seen in <code>grades.html</code> in the front-end source:</p>
 <pre><code>{% if grade.student_name == 'Wilton Trojan' and grade.grade_score == 'F' and course_name == 'Computer Science' %}
 &lt;td class=&quot;grade_score&quot;&gt;{{config.FLAG_TWO}}&lt;/td&gt;
 {% else %}
